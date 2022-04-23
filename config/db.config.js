@@ -6,7 +6,7 @@ module.exports = {
     
     PASSWORD: "",
     
-    DB: "parkings",
+    DB: "parkingdb",
     
     dialect: "mysql",
     
