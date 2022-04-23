@@ -59,40 +59,48 @@ exports.findAll = (req, res) => {
 
 
 //show one parking
-exports.findOne = (req, res) => {
-  const id = req.params.id;
+exports.findOneParking = async (req, res) => {
+  const id =Number(req.params.id);
 
-  // Parking.findByPk(id)
-  //   .then(data => {
-
-  //     if(!data){
-  //       return next(new Error('Data not found.'));
-  //     }
-  //     res.send(data);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).send({
-  //       message: "Error retrieving Parking with id=" + id
-  //     });
-  //   });
-
-
-  Parking.findAll({
-    where: {
-      id: id
-    }
-  }).then(data => {
+ await Parking.findOne({ where: { id: id } })
+  .then(data => {
 
     if(!data){
         return next(new Error('Data not found.'));
+    }else if(data.length==0){
+      res.send('Data not found.');
+    }else{
+      res.send(data);
     }
-     res.send(data);
+   
   })
     .catch(err => {
        res.status(500).send({
        message: "Error retrieving Parking with id=" + id
      });
      });
+
+
+  // Parking.findAll({
+  //   where: {
+  //     id: id
+  //   }
+  // }).then(data => {
+
+  //   if(!data){
+  //       return next(new Error('Data not found.'));
+  //   }else if(data.length==0){
+  //     res.send('Data not found.');
+  //   }else{
+  //     res.send(data);
+  //   }
+   
+  // })
+  //   .catch(err => {
+  //      res.status(500).send({
+  //      message: "Error retrieving Parking with id=" + id
+  //    });
+  //    });
 
 
 };
@@ -109,7 +117,7 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Parking was updated successfully."
+          message: "Parking " +id+ " was updated successfully."
         });
       } else {
         res.send({
@@ -136,7 +144,7 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Parking was deleted successfully!"
+          message: "Parking " +id+ " was deleted successfully!"
         });
       } else {
         res.send({
@@ -174,9 +182,9 @@ exports.deleteAll = (req, res) => {
 
 
 //Find all object by condition
-exports.findAllDouala = (req, res) => {
-
-  Parking.findAll({ where: { city: 'Douala' } })
+exports.findAllByCity = (req, res) => {
+  const city= req.params.city;
+  Parking.findAll({ where: { city: city } })
   .then(data => {
   
   res.send(data);

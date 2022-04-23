@@ -7,16 +7,16 @@ module.exports = app => {
     router.post("/", parking.create);
   
     // Retrieve all Tutorials
-    router.get("/parkings", parking.findAll);
+    router.get("/", parking.findAll);
   
     // Retrieve all published Tutorials
-    router.get("/Douala", parking.findAllDouala);
+    router.get("/city/:city", parking.findAllByCity);
   
     // Retrieve a single Tutorial with id
-    router.get("/parkings/:id", parking.findOne);
+    router.get("/:id", parking.findOneParking);
   
     // Update a Tutorial with id
-    router.put("/parkings/:id", parking.update);
+    router.put("/:id", parking.update);
   
     // Delete a Tutorial with id
     router.delete("/:id", parking.delete);
